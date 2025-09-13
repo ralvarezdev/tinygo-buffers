@@ -1,6 +1,6 @@
 //go:build tinygo && (rp2040 || rp2350)
 
-package tinygo_converter
+package tinygo_buffers
 
 var (
 	// WhitespaceBuffer is a byte slice representing a whitespace character
