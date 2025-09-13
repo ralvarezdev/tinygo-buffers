@@ -24,11 +24,11 @@ var (
 	// Float64Buffer is the buffer used for float64 messages
 	Float64Buffer = [8]byte{}
 
-	// AsciiHexDigits is a byte slice representing ASCII hex digits
-	AsciiHexDigits = []byte("0123456789ABCDEF")
+	// ASCIIHexDigits is a byte slice representing ASCII hex digits
+	ASCIIHexDigits = []byte("0123456789ABCDEF")
 
-	// AsciiDecimalDigits is a byte slice representing ASCII decimal digits
-	AsciiDecimalDigits = []byte("0123456789")
+	// ASCIIDecimalDigits is a byte slice representing ASCII decimal digits
+	ASCIIDecimalDigits = []byte("0123456789")
 
 	// UintToHexBuffer is a buffer used for converting uint64 to hex
 	UintToHexBuffer = [16]byte{}

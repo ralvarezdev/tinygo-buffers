@@ -2,7 +2,7 @@
 
 package tinygo_buffers
 
-// UintToHexIndex returns the index in the asciiHexDigits for a given uint value
+// UintToHexIndex returns the index in the ASCIIHexDigits for a given uint value
 //
 // Parameters:
 //
@@ -12,7 +12,7 @@ package tinygo_buffers
 //
 // Returns:
 //
-// The index in the asciiHexDigits for the specified hex digit, or -1 if the position is out of range.
+// The index in the ASCIIHexDigits for the specified hex digit, or -1 if the position is out of range.
 func UintToHexIndex(value uint64, size int, pos int) int {
 	if pos < 0 || pos > (size/4)-1 {
 		return -1
@@ -32,9 +32,9 @@ func UintToHexIndex(value uint64, size int, pos int) int {
 // A byte slice representing the hexadecimal representation of the uint8 value.
 func Uint8ToHex(value uint8) []byte {
 	for c := range UintToHexBuffer {
-		index := l.UintToHexIndex(uint64(value), 8, c)
+		index := UintToHexIndex(uint64(value), 8, c)
 		if index >= 0 {
-			UintToHexBuffer[c] = asciiHexDigits[index]
+			UintToHexBuffer[c] = ASCIIHexDigits[index]
 		}
 	}
 	return UintToHexBuffer[:2]
@@ -51,9 +51,9 @@ func Uint8ToHex(value uint8) []byte {
 // A byte slice representing the hexadecimal representation of the uint16 value.
 func Uint16ToHex(value uint16) []byte {
 	for c := range UintToHexBuffer {
-		index := l.UintToHexIndex(uint64(value), 16, c)
+		index := UintToHexIndex(uint64(value), 16, c)
 		if index >= 0 {
-			UintToHexBuffer[c] = asciiHexDigits[index]
+			UintToHexBuffer[c] = ASCIIHexDigits[index]
 		}
 	}
 	return UintToHexBuffer[:4]
@@ -70,9 +70,9 @@ func Uint16ToHex(value uint16) []byte {
 // A byte slice representing the hexadecimal representation of the uint32 value.
 func Uint32ToHex(value uint32) []byte {
 	for c := range UintToHexBuffer {
-		index := l.UintToHexIndex(uint64(value), 32, c)
+		index := UintToHexIndex(uint64(value), 32, c)
 		if index >= 0 {
-			UintToHexBuffer[c] = asciiHexDigits[index]
+			UintToHexBuffer[c] = ASCIIHexDigits[index]
 		}
 	}
 	return UintToHexBuffer[:8]
@@ -89,9 +89,9 @@ func Uint32ToHex(value uint32) []byte {
 // A byte slice representing the hexadecimal representation of the uint64 value.
 func Uint64ToHex(value uint64) []byte {
 	for c := range UintToHexBuffer {
-		index := l.UintToHexIndex(value, 64, c)
+		index := UintToHexIndex(value, 64, c)
 		if index >= 0 {
-			UintToHexBuffer[c] = asciiHexDigits[index]
+			UintToHexBuffer[c] = ASCIIHexDigits[index]
 		}
 	}
 	return UintToHexBuffer[:16]
@@ -112,11 +112,11 @@ func UintToDecimal(value uint64) []byte {
     v := value
     if v == 0 {
         i--
-        UintToDecimalBuffer[i] = asciiDecimalDigits[0]
+        UintToDecimalBuffer[i] = ASCIIDecimalDigits[0]
     }
     for v > 0 && i > 0 {
         i--
-        UintToDecimalBuffer[i] = asciiDecimalDigits[v%10]
+        UintToDecimalBuffer[i] = ASCIIDecimalDigits[v%10]
         v /= 10
     }
     return UintToDecimalBuffer[i:]
@@ -133,7 +133,7 @@ func UintToDecimal(value uint64) []byte {
 //
 // A byte slice representing the decimal representation of the uint value with leading zeros if necessary.
 func UintToDecimalFixed(value uint64, width int) []byte {
-    buffer := l.UintToDecimal(uint64(value))
+    buffer := UintToDecimal(uint64(value))
     pad := width - len(buffer)
 
 	// Check if padding is needed
@@ -145,7 +145,7 @@ func UintToDecimalFixed(value uint64, width int) []byte {
 	copy(UintToDecimalBuffer[pad:], buffer)
     // Prepend leading zeros
     for i := 0; i < pad; i++ {
-        UintToDecimalBuffer[i] = asciiDecimalDigits[0]
+        UintToDecimalBuffer[i] = ASCIIDecimalDigits[0]
     }
     return UintToDecimalBuffer[:width]
 }
