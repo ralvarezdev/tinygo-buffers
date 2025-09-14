@@ -5,6 +5,8 @@ package tinygo_buffers
 import (
 	"math"
 	"encoding/binary"
+
+	tinygotypes "github.com/ralvarezdev/tinygo-types"
 )
 
 // UintToHexIndex returns the index in the ASCIIHexDigits for a given uint value
