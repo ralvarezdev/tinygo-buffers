@@ -170,7 +170,7 @@ func UintToDecimalFixed(value uint64, width int) []byte {
 func Uint16ToBytes(value uint16,  buffer []byte) tinygotypes.ErrorCode {
 	// Ensure the buffer has at least 2 bytes
 	if len(buffer) < 2 {
-		return tinygotypes.ErrorCodeBuffersInvalidBufferSize
+		return ErrorCodeBuffersInvalidBufferSize
 	}
 	binary.BigEndian.PutUint16(buffer, value)
 	return tinygotypes.ErrorCodeNil
@@ -189,7 +189,7 @@ func Uint16ToBytes(value uint16,  buffer []byte) tinygotypes.ErrorCode {
 func Uint32ToBytes(value uint32,  buffer []byte) tinygotypes.ErrorCode {
 	// Ensure the buffer has at least 4 bytes
 	if len(buffer) < 4 {
-		return tinygotypes.ErrorCodeBuffersInvalidBufferSize
+		return ErrorCodeBuffersInvalidBufferSize
 	}
 	binary.BigEndian.PutUint32(buffer, value)
 	return tinygotypes.ErrorCodeNil
@@ -208,7 +208,7 @@ func Uint32ToBytes(value uint32,  buffer []byte) tinygotypes.ErrorCode {
 func Uint64ToBytes(value uint64,  buffer []byte) tinygotypes.ErrorCode {
 	// Ensure the buffer has at least 8 bytes
 	if len(buffer) < 8 {
-		return tinygotypes.ErrorCodeBuffersInvalidBufferSize
+		return ErrorCodeBuffersInvalidBufferSize
 	}
 	binary.BigEndian.PutUint64(buffer, value)
 	return tinygotypes.ErrorCodeNil
@@ -255,7 +255,7 @@ func Float64ToBytes(value float64,  buffer []byte) tinygotypes.ErrorCode {
 func Uint16ToBytesLE(value uint16,  buffer []byte) tinygotypes.ErrorCode {
 	// Ensure the buffer has at least 2 bytes
 	if len(buffer) < 2 {
-		return tinygotypes.ErrorCodeBuffersInvalidBufferSize
+		return ErrorCodeBuffersInvalidBufferSize
 	}
 	binary.LittleEndian.PutUint16(buffer, value)
 	return tinygotypes.ErrorCodeNil
@@ -274,7 +274,7 @@ func Uint16ToBytesLE(value uint16,  buffer []byte) tinygotypes.ErrorCode {
 func Uint32ToBytesLE(value uint32,  buffer []byte) tinygotypes.ErrorCode {
 	// Ensure the buffer has at least 4 bytes
 	if len(buffer) < 4 {
-		return tinygotypes.ErrorCodeBuffersInvalidBufferSize
+		return ErrorCodeBuffersInvalidBufferSize
 	}
 	binary.LittleEndian.PutUint32(buffer, value)
 	return tinygotypes.ErrorCodeNil
@@ -293,7 +293,7 @@ func Uint32ToBytesLE(value uint32,  buffer []byte) tinygotypes.ErrorCode {
 func Uint64ToBytesLE(value uint64,  buffer []byte) tinygotypes.ErrorCode {
 	// Ensure the buffer has at least 8 bytes
 	if len(buffer) < 8 {
-		return tinygotypes.ErrorCodeBuffersInvalidBufferSize
+		return ErrorCodeBuffersInvalidBufferSize
 	}
 	binary.LittleEndian.PutUint64(buffer, value)
 	return tinygotypes.ErrorCodeNil
@@ -338,7 +338,7 @@ func Float64ToBytesLE(value float64,  buffer []byte) tinygotypes.ErrorCode {
 // The uint16 value represented by the first 2 bytes of the input slice, or an error code if the input is invalid.
 func BytesToUint16(data []byte) (uint16, tinygotypes.ErrorCode) {
 	if len(data) < 2 {
-		return 0, tinygotypes.ErrorCodeBuffersInvalidBufferSize
+		return 0, ErrorCodeBuffersInvalidBufferSize
 	}
 	return (uint16(data[0]) << 8) | uint16(data[1]), tinygotypes.ErrorCodeNil
 }
@@ -354,7 +354,7 @@ func BytesToUint16(data []byte) (uint16, tinygotypes.ErrorCode) {
 // The uint32 value represented by the first 4 bytes of the input slice, or an error code if the input is invalid.
 func BytesToUint32(data []byte) (uint32, tinygotypes.ErrorCode) {
 	if len(data) < 4 {
-		return 0, tinygotypes.ErrorCodeBuffersInvalidBufferSize
+		return 0, ErrorCodeBuffersInvalidBufferSize
 	}
 	return (uint32(data[0]) << 24) | (uint32(data[1]) << 16) | (uint32(data[2]) << 8) | uint32(data[3]), tinygotypes.ErrorCodeNil
 }
@@ -370,7 +370,7 @@ func BytesToUint32(data []byte) (uint32, tinygotypes.ErrorCode) {
 // The uint64 value represented by the first 8 bytes of the input slice, or an error code if the input is invalid.
 func BytesToUint64(data []byte) (uint64, tinygotypes.ErrorCode) {
 	if len(data) < 8 {
-		return 0, tinygotypes.ErrorCodeBuffersInvalidBufferSize
+		return 0, ErrorCodeBuffersInvalidBufferSize
 	}
 	return (uint64(data[0]) << 56) | (uint64(data[1]) << 48) | (uint64(data[2]) << 40) | (uint64(data[3]) << 32) |
 		(uint64(data[4]) << 24) | (uint64(data[5]) << 16) | (uint64(data[6]) << 8) | uint64(data[7]), tinygotypes.ErrorCodeNil
@@ -421,7 +421,7 @@ func BytesToFloat64(data []byte) (float64, tinygotypes.ErrorCode) {
 // The uint16 value represented by the first 2 bytes of the input slice in little-endian order, or an error code if the input is invalid.
 func BytesToUint16LE(data []byte) (uint16, tinygotypes.ErrorCode) {
 	if len(data) < 2 {
-		return 0, tinygotypes.ErrorCodeBuffersInvalidBufferSize
+		return 0, ErrorCodeBuffersInvalidBufferSize
 	}
 	return (uint16(data[1]) << 8) | uint16(data[0]), tinygotypes.ErrorCodeNil
 }
@@ -437,7 +437,7 @@ func BytesToUint16LE(data []byte) (uint16, tinygotypes.ErrorCode) {
 // The uint32 value represented by the first 4 bytes of the input slice in little-endian order, or an error code if the input is invalid.
 func BytesToUint32LE(data []byte) (uint32, tinygotypes.ErrorCode) {
 	if len(data) < 4 {
-		return 0, tinygotypes.ErrorCodeBuffersInvalidBufferSize
+		return 0, ErrorCodeBuffersInvalidBufferSize
 	}
 	return (uint32(data[3]) << 24) | (uint32(data[2]) << 16) | (uint32(data[1]) << 8) | uint32(data[0]), tinygotypes.ErrorCodeNil
 }
@@ -453,7 +453,7 @@ func BytesToUint32LE(data []byte) (uint32, tinygotypes.ErrorCode) {
 // The uint64 value represented by the first 8 bytes of the input slice in little-endian order, or an error code if the input is invalid.
 func BytesToUint64LE(data []byte) (uint64, tinygotypes.ErrorCode) {
 	if len(data) < 8 {
-		return 0, tinygotypes.ErrorCodeBuffersInvalidBufferSize
+		return 0, ErrorCodeBuffersInvalidBufferSize
 	}
 	return (uint64(data[7]) << 56) | (uint64(data[6]) << 48) | (uint64(data[5]) << 40) | (uint64(data[4]) << 32) |
 		(uint64(data[3]) << 24) | (uint64(data[2]) << 16) | (uint64(data[1]) << 8) | uint64(data[0]), tinygotypes.ErrorCodeNil
