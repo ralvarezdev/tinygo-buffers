@@ -1,2 +1,2 @@
-github.com/ralvarezdev/tinygo-types v0.0.3 h1:h8ogOD2lOVxR+w5i6o+v/8qTROFA2KBjVXBM7NT3SMc=
-github.com/ralvarezdev/tinygo-types v0.0.3/go.mod h1:2u3ApwAtIqGZ6wDsmUYt44bIk1DEn06INNjtfWndCr4=
+github.com/ralvarezdev/tinygo-errors v0.0.4 h1:nuqApi7tEzPSSf2/3Uqxxizwftvoxczaec9BA95Hcj4=
+github.com/ralvarezdev/tinygo-errors v0.0.4/go.mod h1:PlkyrG60saZetwFX1mPhve+9l2pneVH7c8q5w4sxe8M=

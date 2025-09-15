@@ -1,7 +1,7 @@
 package tinygo_buffers
 
 import (
-	tinygotypes "github.com/ralvarezdev/tinygo-types"
+	tinygoerrors "github.com/ralvarezdev/tinygo-errors"
 )
 
 const (
@@ -10,6 +10,6 @@ const (
 )
 
 const (
-	ErrorCodeBuffersInvalidBufferSize tinygotypes.ErrorCode = ErrorCodeBuffersStartNumber + iota
+	ErrorCodeBuffersInvalidBufferSize tinygoerrors.ErrorCode = ErrorCodeBuffersStartNumber + iota
 	
 )
