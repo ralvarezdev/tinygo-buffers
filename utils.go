@@ -155,6 +155,48 @@ func UintToDecimalFixed(value uint64, width int) []byte {
     return UintToDecimalBuffer[:width]
 }
 
+// Float64ToDecimal converts a float64 value to its decimal representation with specified precision
+//
+// Parameters:
+//
+//	value: The float64 value to convert.
+//	precision: The number of digits after the decimal point.
+//
+// Returns:
+//
+// The number of bytes written to the buffer and an error code indicating success or failure
+func Float64ToDecimal(value float64, precision int) ([]byte, tinygoerrors.ErrorCode) {
+	// Get the integer and fractional parts
+	intPart := int64(value)
+    fracPart := value - float64(intPart)
+    idx := 0
+
+    // Convert integer part
+    intBuf := UintToDecimal(uint64(intPart))
+    copy(Float64ToDecimalBuffer[idx:], intBuf)
+    idx += len(intBuf)
+
+    // Add dot
+    Float64ToDecimalBuffer[idx] = '.'
+    idx++
+
+	// Check precision limit
+	if len(Float64ToDecimalBuffer)-idx < precision {
+		return nil, ErrorCodeBuffersTooMuchPrecisionDigitsForFloat64
+	}
+
+    // Convert fractional part
+    for i := 0; i < precision; i++ {
+        fracPart *= 10
+        digit := int(fracPart)
+        Float64ToDecimalBuffer[idx] = byte('0' + digit)
+        idx++
+        fracPart -= float64(digit)
+    }
+
+    return Float64ToDecimalBuffer[:idx], tinygoerrors.ErrorCodeNil
+}
+
 // Uint16ToBytes converts a uint16 value to an array of 2 bytes in big-endian order, storing the result in the provided buffer
 //
 // Parameters:

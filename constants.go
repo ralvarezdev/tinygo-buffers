@@ -33,4 +33,7 @@ var (
 
 	// UintToDecimalBuffer is a buffer used for converting uint64 to decimal
 	UintToDecimalBuffer = [20]byte{}
+
+	// Float64ToDecimalBuffer is a buffer used for converting float64 to decimal
+	Float64ToDecimalBuffer = [20]byte{}
 )
