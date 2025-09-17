@@ -171,6 +171,12 @@ func Float64ToDecimal(value float64, precision int) ([]byte, tinygoerrors.ErrorC
     fracPart := value - float64(intPart)
     idx := 0
 
+	// Check if the number is negative
+	if value < 0 {
+		Float64ToDecimalBuffer[idx] = '-'
+		idx++
+	}
+
     // Convert integer part
     intBuf := UintToDecimal(uint64(intPart))
     copy(Float64ToDecimalBuffer[idx:], intBuf)
