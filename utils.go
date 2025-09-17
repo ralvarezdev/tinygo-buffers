@@ -220,7 +220,7 @@ func Float64ToDecimal(value float64, precision int) ([]byte, tinygoerrors.ErrorC
     // Convert fractional part
     for i := 0; i < precision; i++ {
         fracPart *= 10
-        digit := int(fracPart)
+        digit := int(math.Abs(fracPart))
         Float64ToDecimalBuffer[idx] = byte('0' + digit)
         idx++
         fracPart -= float64(digit)
