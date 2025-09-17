@@ -127,6 +127,38 @@ func UintToDecimal(value uint64) []byte {
     return UintToDecimalBuffer[i:]
 }
 
+// IntToDecimal converts an int64 value to its decimal representation
+//
+// Parameters:
+//
+//	value: The int64 value to convert.
+//
+// Returns:
+//
+// A byte slice representing the decimal representation of the int64 value, including a minus sign if negative.
+func IntToDecimal(value int64) []byte {
+    i := len(IntToDecimalBuffer)
+    negative := value < 0
+    v := value
+    if negative {
+        v = -v
+    }
+    if v == 0 {
+        i--
+        IntToDecimalBuffer[i] = ASCIIDecimalDigits[0]
+    }
+    for v > 0 && i > 0 {
+        i--
+        IntToDecimalBuffer[i] = ASCIIDecimalDigits[v%10]
+        v /= 10
+    }
+    if negative && i > 0 {
+        i--
+        IntToDecimalBuffer[i] = '-'
+    }
+    return IntToDecimalBuffer[i:]
+}
+
 // UintToDecimalFixed converts a uint value to its decimal representation with fixed width
 //
 // Parameters:
@@ -171,14 +203,8 @@ func Float64ToDecimal(value float64, precision int) ([]byte, tinygoerrors.ErrorC
     fracPart := value - float64(intPart)
     idx := 0
 
-	// Check if the number is negative
-	if value < 0 {
-		Float64ToDecimalBuffer[idx] = '-'
-		idx++
-	}
-
     // Convert integer part
-    intBuf := UintToDecimal(uint64(intPart))
+    intBuf := IntToDecimal(intPart)
     copy(Float64ToDecimalBuffer[idx:], intBuf)
     idx += len(intBuf)
 
@@ -222,6 +248,19 @@ func Uint16ToBytes(value uint16,  buffer []byte) tinygoerrors.ErrorCode {
 	return tinygoerrors.ErrorCodeNil
 }
 
+// Int16ToBytes converts an int16 value to an array of 2 bytes in big-endian order, storing the result in the provided buffer
+//
+// Parameters:
+//
+//	value: The int16 value to convert.
+//  buffer: A byte slice to store the resulting bytes.	
+// Returns:
+//
+// An error code indicating success or failure.
+func Int16ToBytes(value int16,  buffer []byte) tinygoerrors.ErrorCode {
+	return Uint16ToBytes(uint16(value), buffer)
+}
+
 // Uint32ToBytes converts a uint32 value to an array of 4 bytes in big-endian order, storing the result in the provided buffer
 //
 // Parameters:
@@ -241,6 +280,20 @@ func Uint32ToBytes(value uint32,  buffer []byte) tinygoerrors.ErrorCode {
 	return tinygoerrors.ErrorCodeNil
 }
 
+// Int32ToBytes converts an int32 value to an array of 4 bytes in big-endian order, storing the result in the provided buffer
+//
+// Parameters:
+//
+//	value: The int32 value to convert.
+//  buffer: A byte slice to store the resulting bytes.			
+//
+// Returns:
+//
+// An error code indicating success or failure.
+func Int32ToBytes(value int32,  buffer []byte) tinygoerrors.ErrorCode {
+	return Uint32ToBytes(uint32(value), buffer)
+}
+
 // Uint64ToBytes converts a uint64 value to an array of 8 bytes in big-endian order, storing the result in the provided buffer
 //
 // Parameters:
@@ -258,6 +311,20 @@ func Uint64ToBytes(value uint64,  buffer []byte) tinygoerrors.ErrorCode {
 	}
 	binary.BigEndian.PutUint64(buffer, value)
 	return tinygoerrors.ErrorCodeNil
+}
+
+// Int64ToBytes converts an int64 value to an array of 8 bytes in big-endian order, storing the result in the provided buffer
+//
+// Parameters:
+//
+//	value: The int64 value to convert.
+//  buffer: A byte slice to store the resulting bytes.
+//
+// Returns:
+//
+// An error code indicating success or failure.
+func Int64ToBytes(value int64,  buffer []byte) tinygoerrors.ErrorCode {
+	return Uint64ToBytes(uint64(value), buffer)
 }
 
 // Float32ToBytes converts a float32 value to an array of 4 bytes in big-endian order, storing the result in the provided buffer
@@ -307,6 +374,20 @@ func Uint16ToBytesLE(value uint16,  buffer []byte) tinygoerrors.ErrorCode {
 	return tinygoerrors.ErrorCodeNil
 }
 
+// Int16ToBytesLE converts an int16 value to an array of 2 bytes in little-endian order, storing the result in the provided buffer
+//
+// Parameters:
+//
+//	value: The int16 value to convert.
+//  buffer: A byte slice to store the resulting bytes.	
+//
+// Returns:
+//
+// An error code indicating success or failure.
+func Int16ToBytesLE(value int16,  buffer []byte) tinygoerrors.ErrorCode {
+	return Uint16ToBytesLE(uint16(value), buffer)
+}
+
 // Uint32ToBytesLE converts a uint32 value to an array of 4 bytes in little-endian order, storing the result in the provided buffer
 //
 // Parameters:
@@ -326,6 +407,20 @@ func Uint32ToBytesLE(value uint32,  buffer []byte) tinygoerrors.ErrorCode {
 	return tinygoerrors.ErrorCodeNil
 }
 
+// Int32ToBytesLE converts an int32 value to an array of 4 bytes in little-endian order, storing the result in the provided buffer
+//
+// Parameters:
+//
+//	value: The int32 value to convert.
+//  buffer: A byte slice to store the resulting bytes.			
+//
+// Returns:	
+//
+// An error code indicating success or failure.
+func Int32ToBytesLE(value int32,  buffer []byte) tinygoerrors.ErrorCode {
+	return Uint32ToBytesLE(uint32(value), buffer)
+}
+
 // Uint64ToBytesLE converts a uint64 value to an array of 8 bytes in little-endian order, storing the result in the provided buffer
 //
 // Parameters:
@@ -343,6 +438,20 @@ func Uint64ToBytesLE(value uint64,  buffer []byte) tinygoerrors.ErrorCode {
 	}
 	binary.LittleEndian.PutUint64(buffer, value)
 	return tinygoerrors.ErrorCodeNil
+}
+
+// Int64ToBytesLE converts an int64 value to an array of 8 bytes in little-endian order, storing the result in the provided buffer
+//
+// Parameters:
+//
+//	value: The int64 value to convert.
+//  buffer: A byte slice to store the resulting bytes.
+//
+// Returns:
+//
+// An error code indicating success or failure.
+func Int64ToBytesLE(value int64,  buffer []byte) tinygoerrors.ErrorCode {
+	return Uint64ToBytesLE(uint64(value), buffer)
 }
 
 // Float32ToBytesLE converts a float32 value to an array of 4 bytes in little-endian order, storing the result in the provided buffer
@@ -389,6 +498,23 @@ func BytesToUint16(data []byte) (uint16, tinygoerrors.ErrorCode) {
 	return (uint16(data[0]) << 8) | uint16(data[1]), tinygoerrors.ErrorCodeNil
 }
 
+// BytesToInt16 converts a byte slice to an int16 value
+//
+// Parameters:	
+//
+//	data: A byte slice containing at least 2 bytes.
+//
+// Returns:
+//
+// The int16 value represented by the first 2 bytes of the input slice, or an error code if the input is invalid.
+func BytesToInt16(data []byte) (int16, tinygoerrors.ErrorCode) {
+	u, err := BytesToUint16(data)
+	if err != tinygoerrors.ErrorCodeNil {
+		return 0, err
+	}
+	return int16(u), tinygoerrors.ErrorCodeNil
+}
+
 // BytesToUint32 converts a byte slice to a uint32 value
 //
 // Parameters:
@@ -403,6 +529,23 @@ func BytesToUint32(data []byte) (uint32, tinygoerrors.ErrorCode) {
 		return 0, ErrorCodeBuffersInvalidBufferSize
 	}
 	return (uint32(data[0]) << 24) | (uint32(data[1]) << 16) | (uint32(data[2]) << 8) | uint32(data[3]), tinygoerrors.ErrorCodeNil
+}
+
+// BytesToInt32 converts a byte slice to an int32 value
+//
+// Parameters:
+//
+//	data: A byte slice containing at least 4 bytes.
+//
+// Returns:
+//
+// The int32 value represented by the first 4 bytes of the input slice, or an error code if the input is invalid.
+func BytesToInt32(data []byte) (int32, tinygoerrors.ErrorCode) {
+	u, err := BytesToUint32(data)
+	if err != tinygoerrors.ErrorCodeNil {
+		return 0, err
+	}
+	return int32(u), tinygoerrors.ErrorCodeNil
 }
 
 // BytesToUint64 converts a byte slice to a uint64 value
@@ -420,6 +563,23 @@ func BytesToUint64(data []byte) (uint64, tinygoerrors.ErrorCode) {
 	}
 	return (uint64(data[0]) << 56) | (uint64(data[1]) << 48) | (uint64(data[2]) << 40) | (uint64(data[3]) << 32) |
 		(uint64(data[4]) << 24) | (uint64(data[5]) << 16) | (uint64(data[6]) << 8) | uint64(data[7]), tinygoerrors.ErrorCodeNil
+}
+
+// BytesToInt64 converts a byte slice to an int64 value
+//
+// Parameters:
+//
+//	data: A byte slice containing at least 8 bytes.
+//
+// Returns:
+//
+// The int64 value represented by the first 8 bytes of the input slice, or an error code if the input is invalid.
+func BytesToInt64(data []byte) (int64, tinygoerrors.ErrorCode) {
+	u, err := BytesToUint64(data)
+	if err != tinygoerrors.ErrorCodeNil {
+		return 0, err
+	}
+	return int64(u), tinygoerrors.ErrorCodeNil
 }
 
 // BytesToFloat32 converts a byte slice to a float32 value
@@ -472,6 +632,23 @@ func BytesToUint16LE(data []byte) (uint16, tinygoerrors.ErrorCode) {
 	return (uint16(data[1]) << 8) | uint16(data[0]), tinygoerrors.ErrorCodeNil
 }
 
+// BytesToInt16LE converts a byte slice to an int16 value in little-endian order
+//
+// Parameters:
+//
+//	data: A byte slice containing at least 2 bytes.
+//
+// Returns:
+//
+// The int16 value represented by the first 2 bytes of the input slice in little-endian order, or an error code if the input is invalid.
+func BytesToInt16LE(data []byte) (int16, tinygoerrors.ErrorCode) {
+	u, err := BytesToUint16LE(data)
+	if err != tinygoerrors.ErrorCodeNil {
+		return 0, err
+	}
+	return int16(u), tinygoerrors.ErrorCodeNil
+}
+
 // BytesToUint32LE converts a byte slice to a uint32 value in little-endian order
 //
 // Parameters:
@@ -486,6 +663,23 @@ func BytesToUint32LE(data []byte) (uint32, tinygoerrors.ErrorCode) {
 		return 0, ErrorCodeBuffersInvalidBufferSize
 	}
 	return (uint32(data[3]) << 24) | (uint32(data[2]) << 16) | (uint32(data[1]) << 8) | uint32(data[0]), tinygoerrors.ErrorCodeNil
+}
+
+// BytesToInt32LE converts a byte slice to an int32 value in little-endian order
+//
+// Parameters:
+//
+//	data: A byte slice containing at least 4 bytes.
+//
+// Returns:
+//
+// The int32 value represented by the first 4 bytes of the input slice in little-endian order, or an error code if the input is invalid.
+func BytesToInt32LE(data []byte) (int32, tinygoerrors.ErrorCode) {
+	u, err := BytesToUint32LE(data)
+	if err != tinygoerrors.ErrorCodeNil {
+		return 0, err
+	}
+	return int32(u), tinygoerrors.ErrorCodeNil
 }
 
 // BytesToUint64LE converts a byte slice to a uint64 value in little-endian order
@@ -503,6 +697,23 @@ func BytesToUint64LE(data []byte) (uint64, tinygoerrors.ErrorCode) {
 	}
 	return (uint64(data[7]) << 56) | (uint64(data[6]) << 48) | (uint64(data[5]) << 40) | (uint64(data[4]) << 32) |
 		(uint64(data[3]) << 24) | (uint64(data[2]) << 16) | (uint64(data[1]) << 8) | uint64(data[0]), tinygoerrors.ErrorCodeNil
+}
+
+// BytesToInt64LE converts a byte slice to an int64 value in little-endian order
+//
+// Parameters:
+//
+//	data: A byte slice containing at least 8 bytes.
+//
+// Returns:		
+//
+// The int64 value represented by the first 8 bytes of the input slice in little-endian order, or an error code if the input is invalid.
+func BytesToInt64LE(data []byte) (int64, tinygoerrors.ErrorCode) {
+	u, err := BytesToUint64LE(data)
+	if err != tinygoerrors.ErrorCodeNil {
+		return 0, err
+	}
+	return int64(u), tinygoerrors.ErrorCodeNil
 }
 
 // BytesToFloat32LE converts a byte slice to a float32 value in little-endian order
