@@ -200,7 +200,7 @@ func UintToDecimalFixed(value uint64, width int) []byte {
 func Float64ToDecimal(value float64, precision int) ([]byte, tinygoerrors.ErrorCode) {
 	// Get the integer and fractional parts
 	intPart := int64(value)
-    fracPart := value - float64(intPart)
+	fracPart := math.Abs(value - float64(intPart))
     idx := 0
 
     // Convert integer part
