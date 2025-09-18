@@ -11,5 +11,5 @@ const (
 
 const (
 	ErrorCodeBuffersInvalidBufferSize tinygoerrors.ErrorCode = ErrorCodeBuffersStartNumber + iota
-	ErrorCodeBuffersTooMuchPrecisionDigitsForFloat64 
+	ErrorCodeBuffersTooMuchPrecisionDigitsForFloat64
 )
